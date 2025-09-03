@@ -24,6 +24,7 @@
         /* Custom Font Family */
         body {
             font-family: 'Noto Sans TC', sans-serif;
+            scroll-behavior: smooth;
         }
         .font-noto {
             font-family: 'Noto Sans TC', sans-serif;
@@ -86,10 +87,12 @@
 
                     <main>
                         <HeroSection />
+                        <GlobalDisclaimer />
                         <CrisisAnalysis />
                         <SolutionComparison />
                         <StrategyAnalysis />
                         <TaxCalculator />
+                        <AssumptionsDisclaimer />
                         <GovernmentSubsidy />
                         <ProjectBenefitAnalysis />
                         <TrustMetrics />
@@ -151,6 +154,18 @@
             }, [ref]);
 
             return isIntersecting;
+        };
+
+        // 全域短版提醒
+        const GlobalDisclaimer = () => {
+            return (
+                <div className="bg-sky-100 border-y border-sky-200 text-center p-3 text-sm text-sky-800 sticky top-0 z-40">
+                    本頁採用「簡化估算模型」便於初步溝通，僅供參考。
+                    <a href="#assumptions-details" className="font-bold underline ml-2 hover:text-sky-600">
+                        查看完整假設與限制
+                    </a>
+                </div>
+            );
         };
 
         // 英雄區塊：震撼開場
@@ -302,10 +317,29 @@
                 if (parsedRevenue > 0) { const loss = (parsedRevenue * 0.06 * 0.3) - (parsedRevenue * 0.06 * 0.05); setTaxLoss(loss > 0 ? loss : 0); } else { setTaxLoss(0); }
             }, [revenue]);
             return (
-                <section className="py-20 px-6 bg-slate-100"><div className="max-w-3xl mx-auto text-center"><h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">您的隱性稅損試算</h2><p className="text-lg text-slate-600 mb-8">輸入您的預估年營收，了解潛在的「隱性稅損」規模。</p><div className="bg-white p-8 rounded-lg shadow-inner"><div className="mb-4"><label htmlFor="revenue" className="block text-lg font-medium text-slate-700 mb-2">年營收 (元)</label><input id="revenue" type="number" value={revenue} onChange={(e) => setRevenue(e.target.value)} className="w-full max-w-sm mx-auto text-2xl font-roboto-mono text-center p-3 border-2 border-slate-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition" placeholder="請輸入年營收" /></div><div className="mt-6"><p className="text-lg text-slate-600">預估年度隱性稅損約為：</p><p className="text-4xl md:text-5xl font-bold text-rose-600 font-roboto-mono my-2">{taxLoss.toLocaleString(undefined, { maximumFractionDigits: 0 })} 元</p><p className="text-xs text-slate-500 mt-2 font-roboto-mono">計算公式: (營收 × 6% × 30%) - (營收 × 6% × 5%)</p></div></div><p className="text-sm text-slate-500 mt-4">*此為簡化估算，實際稅負需依個案詳細規劃為準。</p></div></section>
+                <section className="py-20 px-6 bg-slate-100"><div className="max-w-3xl mx-auto text-center"><h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">您的隱性稅損試算</h2><p className="text-lg text-slate-600 mb-8">輸入您的預估年營收，了解潛在的「隱性稅損」規模。</p><div className="bg-white p-8 rounded-lg shadow-inner"><div className="mb-4"><label htmlFor="revenue" className="block text-lg font-medium text-slate-700 mb-2">年營收 (元)</label><input id="revenue" type="number" value={revenue} onChange={(e) => setRevenue(e.target.value)} className="w-full max-w-sm mx-auto text-2xl font-roboto-mono text-center p-3 border-2 border-slate-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition" placeholder="請輸入年營收" /></div><div className="mt-6"><p className="text-lg text-slate-600">預估年度隱性稅損約為：</p><p className="text-4xl md:text-5xl font-bold text-rose-600 font-roboto-mono my-2">{taxLoss.toLocaleString(undefined, { maximumFractionDigits: 0 })} 元</p><p className="text-xs text-slate-500 mt-2 font-roboto-mono">計算公式: (營收 × 6% × 30%) - (營收 × 6% × 5%)</p></div></div></div></section>
             );
         };
         
+        // 區塊中版說明
+        const AssumptionsDisclaimer = () => {
+            return (
+                <section id="assumptions-details" className="py-20 px-6 bg-slate-100">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white border-l-4 border-amber-400 p-8 rounded-r-lg shadow">
+                            <h2 className="text-2xl font-bold text-slate-800 mb-4">重要說明｜簡化估算假設</h2>
+                            <ul className="list-disc list-inside space-y-3 text-slate-600 text-sm md:text-base">
+                                <li>假設淨利率 6%；未細分折舊、利息、一次性項目。</li>
+                                <li>營所稅按 20%、個人綜所稅以 30% 級距估算；未比較各種股利課稅方案。</li>
+                                <li>未納入：未分配盈餘加徵稅（5%）、基本稅額（AMT，個人/營利事業）、二代健保補充保費、稅額抵減/租稅優惠、結轉虧損、移轉訂價與關係人交易等。</li>
+                                <li>數據僅供教育與商務溝通，不構成稅務意見或保證；請以正式文件與最新法規為準。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
         // 政府補助資源
         const GovernmentSubsidy = () => {
             const oneTime = [{ title: '研發轉型支持', amount: '最高 500 萬' }, { title: '地方創生推動', amount: '150 萬' }, { title: '地方型SBIR', amount: '最高 100 萬' }, { title: '品牌價值管理', amount: '最高 35 萬' }, { title: '數位轉型補助', amount: '25 萬' }, { title: '其他輔導...', amount: '...' }];
@@ -415,4 +449,8 @@
     </script>
 </body>
 </html>
+" in the Canvas "稅務規劃建議書 (可直接使用版)" on the right and am asking a question about it.
+I have already selected the code.
+
+Can you remove the selection and tell me what the code is about?
 
