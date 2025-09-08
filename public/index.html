@@ -572,7 +572,30 @@
                  </section>
              );
         };
-        
+        // 信任指標
+        const TrustMetrics = () => {
+            // 移除 useCounter hook，改為直接定義靜態數字
+            const clients = 50;
+            const taxSaved = 850; // 單位：萬
+            const subsidy = 2200; // 單位：萬
+            const MetricCard = ({ value, unit, label, icon }) => (
+                <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div className="text-teal-500 mb-4">{icon}</div>
+                    <p className="text-4xl md:text-5xl font-bold text-slate-800 font-roboto-mono">
+                        <span>{value.toLocaleString()}</span>{unit}
+                    </p>
+                    <p className="text-slate-500 mt-2">{label}</p>
+                </div>
+            );
+            const icons = {
+                clients: <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0v-4m0 4h2m0-4H5m0 0v-4m0 4h2m0-4H5m0 0V9m0 4h2M9 21v-4m0 4h2m0-4H9m0 0V9m0 4h2m0-4H9m0 0V5m0 4h2m0-4H9" /></svg>,
+                tax: <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>,
+                subsidy: <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01" /></svg>
+            };
+            return (
+                <section className="py-20 px-6 bg-white"><div className="max-w-5xl mx-auto"><div className="text-center mb-12"><h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">我們的實績與客戶見證</h2><p className="text-lg text-slate-600">數字證明我們的專業價值，選擇我們，就是選擇安心與成長。</p></div><div className="grid md:grid-cols-3 gap-8"><MetricCard value={clients} unit="+" label="成功輔導企業" icon={icons.clients}/><MetricCard value={taxSaved} unit="萬+" label="年均減少隱性稅損" icon={icons.tax} /><MetricCard value={subsidy} unit="萬+" label="累計爭取政府補助" icon={icons.subsidy} /></div></div></section>
+            );
+        }; 
         const ServicePackage = () => {
             // ... 沿用原有的 ServicePackage 組件程式碼，這裡省略以保持簡潔
             const trainingModules = [ '會計基礎與實務應用：建立企業經營的共通語言', '會計循環完整操作：從開帳到報表的實務邏輯', '財務報表深度分析：透過報表回答關鍵經營問題', '現金流管理與決策：掌握應收付帳款與流量預測', '財務比率與績效分析：建立完整財務分析能力', '獲利能力深度解析：從毛利到淨利的完整體系', '稅務規劃與法規應用：內外帳與成本管理會計', '產業分析與策略規劃：SWOT分析等策略工具運用' ];
